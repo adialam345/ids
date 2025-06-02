@@ -1,80 +1,171 @@
-# Python Web-based IDS (Intrusion Detection System)
+# Network Intrusion Detection System (IDS)
 
-A simple web-based Intrusion Detection System built with Python and Flask. This system monitors network traffic and system resources, providing real-time alerts and visualization through a web interface.
+A real-time network intrusion detection system with web interface built using Python Flask and Scapy. This system monitors network traffic, detects potential threats, and provides firewall management capabilities.
 
 ## Features
 
 - Real-time network traffic monitoring
-- Suspicious IP detection
-- System resource monitoring (CPU and Memory usage)
-- Interactive dashboard with charts and alerts
-- Log management
+- Detection of various attack types:
+  - Port scanning
+  - Ping floods
+  - SYN floods
+  - Tool detection (Nmap, PowerShell, etc.)
+  - OS fingerprinting
+- Web-based dashboard
+- Firewall management interface
+- System resource monitoring
+- Command terminal interface
 
-## Requirements
+## Prerequisites
 
-- Python 3.8 or higher
-- Required Python packages (listed in requirements.txt)
-- Root/Administrator privileges (for packet capture)
+### For Linux:
+- Python 3.11 or higher
+- pip (Python package manager)
+- iptables (for firewall management)
+- Root/sudo privileges
+
+### For Windows:
+- Python 3.11 or higher
+- pip (Python package manager)
+- Administrator privileges
+- Npcap or Winpcap installed
 
 ## Installation
 
-1. Clone this repository:
-```bash
-git clone <repository-url>
-cd ids
-```
+1. Clone the repository or download the source code:
+   ```bash
+   git clone <repository-url>
+   cd ids
+   ```
 
-2. Create a virtual environment (recommended):
-```bash
-python -m venv venv
-source venv/bin/activate  # On Linux/Mac
-# OR
-venv\Scripts\activate  # On Windows
-```
+2. Create and activate a virtual environment:
 
-3. Install required packages:
-```bash
-pip install -r requirements.txt
-```
+   For Linux:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate
+   ```
 
-## Usage
+   For Windows:
+   ```powershell
+   python -m venv venv
+   .\venv\Scripts\activate
+   ```
 
-1. Start the IDS application:
-```bash
-sudo python app.py  # On Linux/Mac
-# OR
-# Run as Administrator on Windows
-python app.py
-```
+3. Install the required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-2. Open your web browser and navigate to:
-```
-http://localhost:5000
-```
+4. Set up firewall permissions:
 
-## Dashboard Features
+   For Linux:
+   ```bash
+   # Install iptables if not already installed
+   sudo apt-get update
+   sudo apt-get install -y iptables
 
-- Real-time network traffic visualization
-- System resource monitoring
-- Suspicious IP detection and alerting
-- Interactive charts and graphs
-- Alert history
+   # Add sudo privileges for iptables (optional but recommended)
+   sudo visudo -f /etc/sudoers.d/iptables
+   # Add the following line (replace 'yourusername'):
+   # yourusername ALL=(ALL) NOPASSWD: /sbin/iptables
+   ```
+
+   For Windows:
+   - Run the application with Administrator privileges
+
+## Running the IDS
+
+1. Activate the virtual environment (if not already activated):
+
+   For Linux:
+   ```bash
+   source venv/bin/activate
+   ```
+
+   For Windows:
+   ```powershell
+   .\venv\Scripts\activate
+   ```
+
+2. Run the application:
+
+   For Linux:
+   ```bash
+   sudo python app.py
+   ```
+
+   For Windows (run PowerShell as Administrator):
+   ```powershell
+   python app.py
+   ```
+
+3. Open your web browser and navigate to:
+   ```
+   http://127.0.0.1:5000
+   ```
+
+## Using the Web Interface
+
+1. **Dashboard**
+   - View real-time network statistics
+   - Monitor system resources
+   - See active alerts and suspicious IPs
+
+2. **Firewall Management**
+   - Add/remove firewall rules
+   - Block/allow specific IPs
+   - Configure port-specific rules
+
+3. **Command Terminal**
+   - Execute allowed network commands
+   - View system status
+   - Monitor network connections
 
 ## Security Considerations
 
-- Run this application in a controlled environment
-- Monitor the logs regularly
-- Adjust the detection thresholds in app.py as needed
-- Keep all dependencies updated
+1. **Access Control**
+   - The web interface binds to all interfaces (0.0.0.0)
+   - Implement proper access controls in production
+   - Consider adding authentication
 
-## Logs
+2. **Privileges**
+   - The application requires elevated privileges
+   - Run with minimal necessary permissions
+   - Use sudo rules instead of running entire app as root
 
-The application generates logs in `ids.log` file. Monitor this file for detailed system events and alerts.
+3. **Network Access**
+   - Default port is 5000
+   - Configure firewall to restrict access
+   - Use HTTPS in production
+
+## Troubleshooting
+
+1. **Permission Issues**
+   - Ensure proper sudo/Administrator privileges
+   - Check firewall permissions
+   - Verify network interface access
+
+2. **Installation Problems**
+   - Ensure Python version compatibility
+   - Install system dependencies
+   - Check virtual environment activation
+
+3. **Network Capture Issues**
+   - Verify Npcap/Winpcap installation (Windows)
+   - Check network interface permissions
+   - Ensure no conflicts with other capture tools
+
+## Contributing
+
+Feel free to submit issues, fork the repository, and create pull requests for any improvements.
 
 ## License
 
-MIT License
+[Your License Here]
 
-## Note
+## Acknowledgments
 
-This is a basic IDS implementation for educational purposes. For production environments, consider using established security tools and implementing additional security measures. 
+- Flask for the web framework
+- Scapy for packet capture
+- Python community for various packages 
